@@ -1,7 +1,7 @@
 
 export const MODAL_NAMES = {
   SUBSTS: 'substitutions',
-  PERMS: 'permissions',
+  TASKDETAIL: 'taskdetail',
   ADD_TASK: 'addtask',
   LOGIN: 'login'
 }

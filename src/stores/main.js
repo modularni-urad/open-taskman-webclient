@@ -3,13 +3,13 @@ import {MODAL_NAMES, DOC_TYPES} from '../consts'
 import APIService from './apiService'
 import AddTaskStore from './addTask'
 import LoginStore from './login'
-// import SubtsEditStore from './substsEdit'
+import TaskDetailStore from './taskDetail'
 // import PermsEditStore from './permsEdit'
 
 const modalMapping = {
   [MODAL_NAMES.ADD_TASK]: AddTaskStore,
-  [MODAL_NAMES.LOGIN]: LoginStore
-  // [MODAL_NAMES.PERMS]: PermsEditStore,
+  [MODAL_NAMES.LOGIN]: LoginStore,
+  [MODAL_NAMES.TASKDETAIL]: TaskDetailStore
   // [MODAL_NAMES.SUBSTS]: SubtsEditStore
 }
 
@@ -21,6 +21,10 @@ export default class StateStore {
     this.api.get(`/tags/`).then(data => {
       this.options = data
     })
+  }
+
+  formatDate (d) {
+    return moment(d).format('DD.MM.YYYY')
   }
 
   on401 (err) {

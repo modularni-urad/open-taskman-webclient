@@ -26,8 +26,8 @@ const AddTaskForm = observer(({store}) => (
       value={store.record.get('due')}
     />
 
-    <FormControl type='number' value={store.record.get('complete') === null ? '' : store.record.get('complete')} placeholder='complete'
-      onChange={(evt) => store.updateData('complete', evt.target.value)} />
+    <FormControl type='number' value={store.record.get('progress') === null ? '' : store.record.get('progress')} placeholder='progress'
+      onChange={(evt) => store.updateData('progress', evt.target.value)} />
 
     <TypeAheadSelect label={'tagy'}
       attr='tags' record={store.record}

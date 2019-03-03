@@ -14,7 +14,7 @@ export default class AddDocStore extends DataManipStore {
     this.onLoaded({
       name: '',
       due: '',
-      complete: 0
+      progress: 0
     })
   }
 

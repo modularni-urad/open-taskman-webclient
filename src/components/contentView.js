@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {DOC_TYPES} from '../consts'
+import {DOC_TYPES, MODAL_NAMES} from '../consts'
 
 const icons = {
   [DOC_TYPES.FOLDER]: 'fa-folder',
@@ -13,7 +13,8 @@ const TextView = observer(({store}) => {
       <thead>
         <tr>
           <th scope='col'>Nazev</th>
-          <th scope='col'>Vytvoreno</th>
+          <th scope='col'>Progress</th>
+          <th scope='col'>Deadline</th>
           <th scope='col'>Majitel</th>
           <th scope='col'>Tagz</th>
         </tr>
@@ -23,11 +24,12 @@ const TextView = observer(({store}) => {
           store.data.map((i, idx) => (
             <tr key={idx}>
               <th scope='row'>
-                <a href='javascript:void(0)' onClick={() => store.onDetailClick(i)}>
+                <a href='javascript:void(0)' onClick={() => store.showModal(MODAL_NAMES.TASKDETAIL, i.id)}>
                   <i className={`fas ${icons[i.typ]}`} /> {i.name}
                 </a>
               </th>
-              <td>{i.created}</td>
+              <td>{i.progress}</td>
+              <td>{store.formatDate(i.due)}</td>
               <td>{i.owner}</td>
               <td>{i.tags}</td>
             </tr>
