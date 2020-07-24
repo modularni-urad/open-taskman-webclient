@@ -1,88 +1,84 @@
-/* global Vue, axios, API, _ */
+/* global axios, API */
 import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
-const validationMixin = window.vuelidate.validationMixin
-const validators = window.validators
 
-export default Vue.extend({
-  mixins: [validationMixin],
+export default {
   data: () => {
     return {
+      loading: true,
       task: null,
+      comments: [],
       content: ''
     }
   },
-  validations: {
-    content: { required: validators.required }
+  filters: {
+    priority: (value) => PRIORITY_LABELS[value],
+    state: (value) => STATE_LABELS[value]
   },
   async created () {
-    const res = await axios.get(`${API}/taskman/tasks`, {
-      params: { filter: { id: this.$props.taskid } }
-    })
-    this.$data.task = res.data[0]
+    const id = this.$props.taskid
+    const res = await Promise.all([
+      axios.get(`${API}/taskman/tasks/`, { params: { filter: { id } } }),
+      axios.get(`${API}/taskman/tasks/${this.$props.taskid}/comments`)
+    ])
+    this.$data.task = res[0].data[0]
+    this.$data.comments = res[1].data
+    this.$data.loading = false
   },
   props: ['taskid'],
   methods: {
     save () {
-      axios.post(`${API}/taskman/tasks`, this.$data)
+      const id = this.$props.taskid
+      const data = { content: this.$data.content }
+      axios.post(`${API}/taskman/tasks/${id}/comments`, data)
         .then(res => {
-          this.$attrs.onSubmit(this.$data)
-          // Hide the modal manually
-          this.$nextTick(() => {
-            this.$bvModal.hide('modal-add')
-          })
+          this.$data.comments.push(res.data)
+          this.$data.content = ''
         })
         .catch(err => {
           const message = err.response.data
           this.$store.dispatch('toast', { message, type: 'error' })
         })
-    },
-    handleSubmit () {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        this.save()
-      }
+    }
+  },
+  computed: {
+    saveDisabled: function () {
+      return this.$data.content.length === 0
     }
   },
   template: `
-      <div class="row">
-        <div class="col-sm-6">
+    <div>
+      <i v-if="loading" class="fa fa-spinner fa-spin"></i>
+      <div class="row" v-else>
+        <div class="col-sm-6 col-md-4">
 
           <h3>{{ task.name }} ({{ task.id}})</h3>
 
           Manažer: {{ task.owner }}<br/>
           Řešitel: {{ task.solver }}<br/>
-          Priorita: {{ task.prio }}<br/>
-          Stav: {{ task.state }}<br/>
+          Priorita: {{ task.prio | priority }}<br/>
+          Stav: {{ task.state | state }}<br/>
           Termín: {{ task.due | formatDate }}<br/>
           #{{ task.tags }}
 
           {{ task.desc }}
+        </div>
 
-          <form ref="form" @submit.stop.prevent="handleSubmit">
-            <b-form-group
-              :state="!$v.content.$error"
-              label="Kometář"
-              label-for="content-input"
-              invalid-feedback="Toto je povinné"
-            >
-              <b-form-textarea rows="5"
-                id="content-input"
-                v-model="$v.content.$model"
-                :state="!$v.content.$error"
-              ></b-form-textarea>
-            </b-form-group>
+        <div class="col-sm-6 col-md-8">
+          <div v-for="c in comments">
+            <div><b>{{ c.author }}</b> <i>{{ c.created | longDate }}</i>:</div>
+            <vue-markdown>{{ c.content }}</vue-markdown>
+          </div>
+          <hr/>
+          <form ref="form">
+            <b-form-textarea rows="3" id="content-input" v-model="content">
+            </b-form-textarea>
 
-            <b-button class="mt-3" block :disabled="$v.$anyError" @click="handleSubmit">
-              Save
+            <b-button class="mt-3" block :disabled="saveDisabled" @click="save">
+              Odeslat
             </b-button>
           </form>
-
-        </div>
-
-        <div class="col-sm-6">
-
         </div>
       </div>
-
+    </div>
   `
-})
+}

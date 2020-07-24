@@ -10,8 +10,8 @@ export default {
         { key: 'id', label: 'ID', sortable: true },
         { key: 'name', label: 'Název', sortable: true },
         { key: 'tags', label: 'Tagy', sortable: true },
-        { key: 'owner', label: 'Manažer', sortable: true },
-        { key: 'solver', label: 'Řešitel', sortable: true },
+        { key: 'owner', label: 'Manažer' },
+        { key: 'solver', label: 'Řešitel' },
         { key: 'due', label: 'Termín', sortable: true },
         { key: 'state', label: 'Stav', sortable: true },
         { key: 'prio', label: 'Priorita', sortable: true },
@@ -136,7 +136,7 @@ export default {
         </item-form>
       </b-modal>
 
-      <b-modal size="xl" id="modal-detail" title="Detail" hide-footer>
+      <b-modal size="xl" id="modal-detail" title="Detail" hide-footer hide-header>
         <detail v-bind:taskid="currDetail"></detail>
       </b-modal>
     </div>
