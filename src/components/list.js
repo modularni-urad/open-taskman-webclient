@@ -1,4 +1,4 @@
-/* global axios, API */
+/* global axios, API, _ */
 import ItemForm from './form.js'
 import Detail from './detail.js'
 import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
@@ -38,11 +38,18 @@ export default {
         perPage: this.perPage,
         sort: ctx.sortBy ? `${ctx.sortBy}:${ctx.sortDesc ? 'desc' : 'asc'}` : 'id:asc'
       }
+      let data = null
       const promise = axios.get(`${API}/taskman/tasks`, { params })
       return promise.then(res => {
         this.totalRows = res.data.pagination.total
           ? res.data.pagination.total : this.totalRows
-        return res.data.data
+        data = res.data.data
+        const uids = _.uniq(
+          _.union(_.map(data, i => i.solver), _.map(data, i => i.owner))
+        )
+        return this.$store.dispatch('loadusers', uids)
+      }).then(res => {
+        return data
       }).catch(err => {
         console.log(err)
         return []
@@ -98,6 +105,12 @@ export default {
       >
         <template v-slot:cell(due)="data">
           {{ data.item.due | formatDate }}
+        </template>
+        <template v-slot:cell(owner)="data">
+          {{ data.item.owner | username }}
+        </template>
+        <template v-slot:cell(solver)="data">
+          {{ data.item.solver | username }}
         </template>
         <template v-slot:cell(prio)="data">
           {{ data.item.prio | priority }}

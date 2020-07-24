@@ -1,4 +1,4 @@
-/* global axios, API */
+/* global axios, API, _ */
 import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
 
 export default {
@@ -22,6 +22,11 @@ export default {
     ])
     this.$data.task = res[0].data[0]
     this.$data.comments = res[1].data
+    const uids = _.uniq(_.union(
+      _.map(res[1].data, i => i.author),
+      [this.$data.task.owner, this.$data.task.solver]
+    ))
+    await this.$store.dispatch('loadusers', uids)
     this.$data.loading = false
   },
   props: ['taskid'],
@@ -51,22 +56,24 @@ export default {
       <div class="row" v-else>
         <div class="col-sm-6 col-md-4">
 
-          <h3>{{ task.name }} ({{ task.id}})</h3>
+          <h3>#{{ task.id}}: {{ task.name }}</h3>
 
-          Manažer: {{ task.owner }}<br/>
-          Řešitel: {{ task.solver }}<br/>
+          Manažer: {{ task.owner | username }}<br/>
+          Řešitel: {{ task.solver | username }}<br/>
           Priorita: {{ task.prio | priority }}<br/>
           Stav: {{ task.state | state }}<br/>
           Termín: {{ task.due | formatDate }}<br/>
-          #{{ task.tags }}
-
-          {{ task.desc }}
+          #{{ task.tags }}, {{ task.created | formatDate }}
+          <hr/>
+          <p><vue-markdown>{{ task.desc }}</vue-markdown></p>
         </div>
 
         <div class="col-sm-6 col-md-8">
-          <div v-for="c in comments">
-            <div><b>{{ c.author }}</b> <i>{{ c.created | longDate }}</i>:</div>
-            <vue-markdown>{{ c.content }}</vue-markdown>
+          <div style="height: 30em; overflow: overlay;">
+            <div v-for="c in comments">
+              <div><b>{{ c.author | username }}</b> <i>{{ c.created | longDate }}</i>:</div>
+              <vue-markdown>{{ c.content }}</vue-markdown>
+            </div>
           </div>
           <hr/>
           <form ref="form">

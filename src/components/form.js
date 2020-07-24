@@ -14,10 +14,12 @@ export default Vue.extend({
       solver: '',
       state: 'new',
       prio: 'nor',
-      due: '',
-      prioOpts: _.map(PRIORITY_LABELS, (v, k) => ({ value: k, text: v })),
-      stateOpts: _.map(STATE_LABELS, (v, k) => ({ value: k, text: v }))
+      due: ''
     }
+  },
+  computed: {
+    prioOpts: () => _.map(PRIORITY_LABELS, (v, k) => ({ value: k, text: v })),
+    stateOpts: () => _.map(STATE_LABELS, (v, k) => ({ value: k, text: v }))
   },
   validations: {
     name: { required: validators.required },

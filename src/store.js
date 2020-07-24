@@ -1,7 +1,12 @@
-/* global Vue, Vuex, localStorage, API, axios */
+/* global Vue, Vuex, localStorage, API, axios, _ */
 
 const KEY = '_opencomm_user_'
 const savedUser = localStorage.getItem(KEY)
+const loadedUsers = {}
+
+Vue.filter('username', function (uid) {
+  return loadedUsers[uid] || 'unknown'
+})
 
 export default new Vuex.Store({
   state: {
@@ -30,24 +35,17 @@ export default new Vuex.Store({
     toast: function (ctx, opts) {
       Vue.$toast.open(opts)
     },
-    login: function (ctx, opts) {
-      return axios.post(`${API}/auth/login`, opts, {
-        withCredentials: false
-      }).then(res => {
-        this.commit('profile', res.data)
-        return res.data
+    loadusers: function (ctx, opts) {
+      const toBeLoaded = _.filter(opts, i => !(i in loadedUsers))
+      return new Promise(resolve => {
+        toBeLoaded.length === 0 ? resolve() : setTimeout(() => {
+          console.log(`loaded: ${JSON.stringify(toBeLoaded)}`)
+          _.each(toBeLoaded, uid => {
+            loadedUsers[uid] = 'jssjfls' + uid
+          })
+          resolve()
+        }, 300)
       })
-    },
-    logout: async function (ctx, opts) {
-      await axios.post(`${API}/auth/logout`)
-      localStorage.removeItem(KEY)
-      this.commit('profile', null)
-    },
-    init: async function (ctx, opts) {
-      try {
-        const res = await axios.get(`${API}/profile`)
-        this.commit('profile', res.data.user)
-      } catch (_) {}
     },
     handleError: function (ctx, opts) {
     }
