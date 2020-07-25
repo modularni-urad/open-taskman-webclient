@@ -4,6 +4,7 @@ import store from './store.js'
 import C from './components/list.js'
 
 Vue.use(VueMarkdown)
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 
 new Vue({
   store,

@@ -1,5 +1,6 @@
 /* global Vue, axios, API, _, moment */
 import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
+import UserSelect from './userselect.js'
 const validationMixin = window.vuelidate.validationMixin
 const validators = window.validators
 
@@ -63,6 +64,9 @@ export default Vue.extend({
         })
     }
   },
+  components: {
+    'user-select': UserSelect
+  },
   template: `
     <form ref="form" @submit.stop.prevent="handleSubmit">
       <div class="row">
@@ -116,11 +120,10 @@ export default Vue.extend({
                 label-for="solver-input"
                 invalid-feedback="Toto je povinné"
               >
-                <b-form-input
-                  id="solver-input"
-                  v-model="$v.solver.$model"
+                <user-select id="solver-input"
                   :state="!$v.solver.$error"
-                ></b-form-input>
+                  v-model="$v.solver.$model">
+                </user-select>
               </b-form-group>
             </div>
           </div>

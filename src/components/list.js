@@ -85,7 +85,7 @@ export default {
     <div>
       <b-breadcrumb class="float-left">
         <b-breadcrumb-item to="/"><i class="fas fa-home"></i></b-breadcrumb-item>
-        <b-breadcrumb-item active>Odběrná místa</b-breadcrumb-item>
+        <b-breadcrumb-item active>Úkoly</b-breadcrumb-item>
       </b-breadcrumb>
 
       <div class="float-right">

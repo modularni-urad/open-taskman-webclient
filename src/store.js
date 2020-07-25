@@ -46,8 +46,6 @@ export default new Vuex.Store({
           resolve()
         }, 300)
       })
-    },
-    handleError: function (ctx, opts) {
     }
   }
 })
