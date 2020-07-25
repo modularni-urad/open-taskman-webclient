@@ -1,6 +1,6 @@
 {
-  "name": "open-docs-browser-webclient",
-  "title": "Simple Web Office",
+  "name": "modularni-urad-taskman-webclient",
+  "title": "Task manager webclient",
   "description": "web based office tools",
   "version": "0.0.1",
   "main": "index.js",
