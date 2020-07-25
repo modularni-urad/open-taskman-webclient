@@ -1,4 +1,4 @@
-import List from './src/list.js'
+import List from './src/components/list.js'
 
 export default {
   List
