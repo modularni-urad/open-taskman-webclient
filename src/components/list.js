@@ -9,13 +9,13 @@ export default {
       fields: [
         { key: 'id', label: 'ID', sortable: true },
         { key: 'name', label: 'Název', sortable: true },
-        { key: 'tags', label: 'Tagy', sortable: true },
+        { key: 'tags', label: 'Tagy' },
         { key: 'owner', label: 'Manažer' },
         { key: 'solver', label: 'Řešitel' },
         { key: 'due', label: 'Termín', sortable: true },
         { key: 'state', label: 'Stav', sortable: true },
         { key: 'prio', label: 'Priorita', sortable: true },
-        { key: 'actions', label: 'Akce' }
+        { key: 'actions', label: '' }
       ],
       items: [],
       isBusy: false,
@@ -89,7 +89,7 @@ export default {
       </b-breadcrumb>
 
       <div class="float-right">
-        <b-button variant="primary" @click="add">
+        <b-button v-if="$store.getters.isMember('taskadmin')" variant="primary" @click="add">
           <i class="fas fa-plus"></i> Přidat
         </b-button>
       </div>
@@ -127,7 +127,9 @@ export default {
           </a>
         </template>
         <template v-slot:cell(actions)="data">
-          <b-button size="sm" variant="primary" v-on:click="edit(data.item)">
+          <b-button v-if="$store.getters.UID === data.item.owner"
+            size="sm" variant="primary"
+            v-on:click="edit(data.item)">
             <i class="fas fa-edit"></i> upravit
           </b-button>
         </template>

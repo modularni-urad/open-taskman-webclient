@@ -48,6 +48,10 @@ export default {
   computed: {
     saveDisabled: function () {
       return this.$data.content.length === 0
+    },
+    canComment: function () {
+      const UID = this.$store.getters.UID
+      return UID === this.$data.task.owner || UID === this.$data.task.solver
     }
   },
   template: `
@@ -76,7 +80,7 @@ export default {
             </div>
           </div>
           <hr/>
-          <form ref="form">
+          <form ref="form" v-if="canComment">
             <b-form-textarea rows="3" id="content-input" v-model="content">
             </b-form-textarea>
 
