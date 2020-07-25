@@ -1,4 +1,4 @@
-/* global Vue, axios, API, _ */
+/* global Vue, axios, API, _, moment */
 import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
 const validationMixin = window.vuelidate.validationMixin
 const validators = window.validators
@@ -32,7 +32,10 @@ export default Vue.extend({
     due: { required: validators.required }
   },
   created () {
-    this.$props.item && Object.assign(this.$data, this.$props.item)
+    if (this.$props.item) {
+      Object.assign(this.$data, this.$props.item)
+      this.$data.due = moment(this.$data.due).format('YYYY-MM-DD')
+    }
   },
   props: ['item'],
   methods: {
@@ -83,11 +86,9 @@ export default Vue.extend({
             label-for="tags-input"
             invalid-feedback="Toto je povinné"
           >
-            <b-form-input
-              id="tags-input"
-              v-model="$v.tags.$model"
-              :state="!$v.tags.$error"
-            ></b-form-input>
+            <b-form-tags input-id="tags-basic"
+              v-model="$v.tags.$model" class="mb-2" :state="!$v.tags.$error">
+            </b-form-tags>
           </b-form-group>
         </div>
 

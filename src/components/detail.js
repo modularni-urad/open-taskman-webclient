@@ -63,7 +63,7 @@ export default {
           Priorita: {{ task.prio | priority }}<br/>
           Stav: {{ task.state | state }}<br/>
           Termín: {{ task.due | formatDate }}<br/>
-          #{{ task.tags }}, {{ task.created | formatDate }}
+          <span v-for="i in task.tags">#{{ i }}</span>, {{ task.created | formatDate }}
           <hr/>
           <p><vue-markdown>{{ task.desc }}</vue-markdown></p>
         </div>

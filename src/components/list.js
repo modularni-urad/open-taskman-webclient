@@ -118,6 +118,9 @@ export default {
         <template v-slot:cell(state)="data">
           {{ data.item.state | state }}
         </template>
+        <template v-slot:cell(tags)="data">
+          <span v-if="data.item.tags" v-for="i in data.item.tags"> #{{ i }}</span>
+        </template>
         <template v-slot:cell(name)="data">
           <a href="javascript:void(0)" v-on:click="detail(data.item)">
             {{ data.item.name }}
