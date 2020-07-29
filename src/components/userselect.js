@@ -1,3 +1,4 @@
+/* global axios, API */
 
 export default {
   data: () => {
@@ -11,9 +12,9 @@ export default {
   },
   watch: {
     query (newQuery) {
-      axios.get(`https://api.github.com/search/users?q=${newQuery}`)
+      axios.get(`${API}/auth/profiles?q=${newQuery}`)
         .then((res) => {
-          this.users = res.data.items
+          this.users = res.data
         })
     }
   },
@@ -23,7 +24,7 @@ export default {
       class="mb-4"
       v-model="query"
       :data="users"
-      :serializer="item => item.login"
+      :serializer="item => item.name"
       @hit="select"
       :placeholder="selected || 'vyhledat uživatele ..'"
     />
