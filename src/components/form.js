@@ -1,5 +1,5 @@
 /* global Vue, axios, API, _, moment */
-import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
+import { PRIORITY_LABELS, STATE_LABELS } from '../consts.js'
 import UserSelect from './userselect.js'
 const validationMixin = window.vuelidate.validationMixin
 const validators = window.validators

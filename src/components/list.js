@@ -1,7 +1,7 @@
-/* global axios, API, _ */
+/* global axios, _ */
 import ItemForm from './form.js'
 import Detail from './detail.js'
-import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
+import { PRIORITY_LABELS, STATE_LABELS } from '../consts.js'
 
 export default {
   data: () => {
@@ -27,6 +27,7 @@ export default {
       item: {}
     }
   },
+  props: ['cfg'],
   filters: {
     priority: (value) => PRIORITY_LABELS[value],
     state: (value) => STATE_LABELS[value]
@@ -39,7 +40,7 @@ export default {
         sort: ctx.sortBy ? `${ctx.sortBy}:${ctx.sortDesc ? 'desc' : 'asc'}` : 'id:asc'
       }
       let data = null
-      const promise = axios.get(`${API}/taskman/tasks`, { params })
+      const promise = axios.get(`${this.$props.cfg.api}/tasks`, { params })
       return promise.then(res => {
         this.totalRows = res.data.pagination.total
           ? res.data.pagination.total : this.totalRows

@@ -1,4 +1,5 @@
 *.min.js
+*.sqlite
 .*
 ./index.html
 .git

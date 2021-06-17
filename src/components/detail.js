@@ -1,5 +1,5 @@
 /* global axios, API, _ */
-import { PRIORITY_LABELS, STATE_LABELS } from './consts.js'
+import { PRIORITY_LABELS, STATE_LABELS } from '../consts.js'
 
 export default {
   data: () => {

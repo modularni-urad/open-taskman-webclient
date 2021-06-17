@@ -1,15 +1,15 @@
 /* global Vue, VueMarkdown */
 import './vuecustoms.js'
 import store from './store.js'
-import C from './components/list.js'
+import C from './index.js'
 
 Vue.use(VueMarkdown)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 
 new Vue({
   store,
-  components: { mycomponent: C },
+  components: { mycomponent: C.List },
   template: `
-  <mycomponent></mycomponent>
+  <mycomponent :cfg="{api: '/api'}" />
   `
 }).$mount('#app')
