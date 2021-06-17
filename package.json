@@ -17,11 +17,13 @@
   },
   "license": "BSD",
   "devDependencies": {
+    "bootstrap-vue-dynamic-form": "github:vencax/bootstrap-vue-dynamic-form",
     "browser-sync": "^2.26.14",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "knex": "^0.21.16",
     "knex-hooks": "0.0.9",
+    "modularni-urad-adminwebapp": "github:modularni-urad/vue-admin",
     "modularni-urad-taskman": "github:modularni-urad/taskman",
     "sqlite3": "^4.2.0"
   },

@@ -35,6 +35,12 @@ export default new Vuex.Store({
     toast: function (ctx, opts) {
       Vue.$toast.open(opts)
     },
+    send: function (ctx, opts) {
+      this.state.user.token && Object.assign(opts, {  // for debug only
+        headers: { 'Authorization': `Bearer ${this.state.user.token}`}
+      })
+      return axios(opts)
+    },
     loadusers: function (ctx, opts) {
       const toBeLoaded = _.filter(opts, i => !(i in loadedUsers))
       return new Promise(resolve => {
