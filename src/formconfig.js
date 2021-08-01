@@ -26,11 +26,11 @@ export default [
   //   component: "dyn-input",
   //   label: "Manažer"
   // },
-  {
-    name: "state",
-    component: "dyn-select",
-    options: _.map(STATE_LABELS, (v, k) => ({ value: k, text: v })),
-    label: "Stav",
-    fieldcomponent: true//"datestring"
-  }
+  // {
+  //   name: "state",
+  //   component: "dyn-select",
+  //   options: _.map(STATE_LABELS, (v, k) => ({ value: k, text: v })),
+  //   label: "Stav",
+  //   fieldcomponent: true//"datestring"
+  // }
 ]

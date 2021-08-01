@@ -25,6 +25,7 @@
     "knex-hooks": "0.0.9",
     "modularni-urad-adminwebapp": "github:modularni-urad/vue-admin",
     "modularni-urad-taskman": "github:modularni-urad/taskman",
+    "entity-api-base": "github:modularni-urad/entity-api-base",
     "sqlite3": "^4.2.0"
   },
   "dependencies": {

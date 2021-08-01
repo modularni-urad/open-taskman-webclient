@@ -1,5 +1,6 @@
 /* global axios, API, _ */
 import { PRIORITY_LABELS, STATE_LABELS } from '../consts.js'
+import CommentForm from './commentform.js'
 
 export default {
   data: () => {
@@ -15,10 +16,11 @@ export default {
     state: (value) => STATE_LABELS[value]
   },
   async created () {
-    const id = this.$props.taskid
+    const api = this.$props.cfg.url
+    const taskid = this.$router.currentRoute.query.detail
     const res = await Promise.all([
-      axios.get(`${API}/taskman/tasks/`, { params: { filter: { id } } }),
-      axios.get(`${API}/taskman/tasks/${this.$props.taskid}/comments`)
+      axios.get(api, { params: { filter: JSON.stringify({ id: taskid }) } }),
+      axios.get(`${api}/${taskid}/comments`)
     ])
     this.$data.task = res[0].data[0]
     this.$data.comments = res[1].data
@@ -29,31 +31,11 @@ export default {
     await this.$store.dispatch('loadusers', uids)
     this.$data.loading = false
   },
-  props: ['taskid'],
+  props: ['cfg'],
   methods: {
-    save () {
-      const id = this.$props.taskid
-      const data = { content: this.$data.content }
-      axios.post(`${API}/taskman/tasks/${id}/comments`, data)
-        .then(res => {
-          this.$data.comments.push(res.data)
-          this.$data.content = ''
-        })
-        .catch(err => {
-          const message = err.response.data
-          this.$store.dispatch('toast', { message, type: 'error' })
-        })
-    }
+
   },
-  computed: {
-    saveDisabled: function () {
-      return this.$data.content.length === 0
-    },
-    canComment: function () {
-      const UID = this.$store.getters.UID
-      return UID === this.$data.task.owner || UID === this.$data.task.solver
-    }
-  },
+  components: { CommentForm },
   template: `
     <div>
       <i v-if="loading" class="fa fa-spinner fa-spin"></i>
@@ -79,15 +61,8 @@ export default {
               <vue-markdown>{{ c.content }}</vue-markdown>
             </div>
           </div>
-          <hr/>
-          <form ref="form" v-if="canComment">
-            <b-form-textarea rows="3" id="content-input" v-model="content">
-            </b-form-textarea>
-
-            <b-button class="mt-3" block :disabled="saveDisabled" @click="save">
-              Odeslat
-            </b-button>
-          </form>
+          
+          <CommentForm :cfg="cfg" :comments="comments" />
         </div>
       </div>
     </div>

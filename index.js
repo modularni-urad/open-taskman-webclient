@@ -1,5 +1,9 @@
-import List from './src/components/list.js'
+import ListComponent from './src/components/list.js'
 
-export default {
-  List
+export default function setupTaskmanRoutes (path, cfg) {
+  return [
+    { path , component: ListComponent, props: { cfg } }
+  ]
 }
+
+export const List = ListComponent

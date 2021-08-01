@@ -1,3 +1,5 @@
+export const LIST_ROUTE_NAME = 'tasklist'
+
 export const PRIORITY_LABELS = {
   'low': 'Nízká',
   'nor': 'Normální',

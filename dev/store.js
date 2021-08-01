@@ -33,11 +33,11 @@ export default new Vuex.Store({
   },
   actions: {
     toast: function (ctx, opts) {
-      Vue.$toast.open(opts)
+      // Vue.$toast.open(opts)
     },
     send: function (ctx, opts) {
-      this.state.user.token && Object.assign(opts, {  // for debug only
-        headers: { 'Authorization': `Bearer ${this.state.user.token}`}
+      Object.assign(opts, {  // for debug only
+        headers: { 'Authorization': `Bearer bjbjbj`}
       })
       return axios(opts)
     },
