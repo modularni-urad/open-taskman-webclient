@@ -1,4 +1,7 @@
-export const LIST_ROUTE_NAME = 'tasklist'
+export const ROUTE_NAMES = {
+  list: 'tasklist',
+  detail: 'taskdetail'
+}
 
 export const PRIORITY_LABELS = {
   'low': 'Nízká',

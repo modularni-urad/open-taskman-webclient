@@ -1,5 +1,5 @@
 import formconfig from '../formconfig.js'
-import Detail from './detail.js'
+import { ROUTE_NAMES } from '../consts.js'
 
 const FileActions = {
   props: ['data', 'doEdit'],
@@ -8,7 +8,7 @@ const FileActions = {
   },
   methods: {
     showDetail: function (i) {
-      this.$router.push({ query: { detail: i.id } })
+      this.$router.push({ name: ROUTE_NAMES.detail, params: { id: i.id } })
     }
   },
   template: `
@@ -39,13 +39,7 @@ export default {
       return Object.assign({conf: formconfig}, this.$props.cfg)
     }
   },
-  components: { Detail },
   template: `
-<div>
   <EntityList :cfg="config" actionsComponent="TaskmanFileActions" />
-  <b-modal v-model="currDetail" size="xl" title="Detail" hide-footer hide-header>
-    <Detail :cfg="cfg" />
-  </b-modal>
-</div>
   `
 }

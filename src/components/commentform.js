@@ -12,7 +12,7 @@ export default {
   props: ['cfg', 'comments'],
   methods: {
     saveComment: async function () {
-      const id = this.$router.currentRoute.query.detail
+      const id = this.$router.currentRoute.params.id
       const api = this.$props.cfg.url
       const data = { content: this.$data.content }
       try {
