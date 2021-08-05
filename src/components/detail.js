@@ -1,7 +1,8 @@
 /* global axios, API, _ */
-import { PRIORITY_LABELS, STATE_LABELS, ROUTE_NAMES } from '../consts.js'
+import { ROUTE_NAMES } from '../consts.js'
 import CommentForm from './commentform.js'
 import StateControl from './statecontrol/index.js'
+import { priority, state } from './filters.js'
 
 export default {
   data: () => {
@@ -12,16 +13,13 @@ export default {
       content: ''
     }
   },
-  filters: {
-    priority: (value) => PRIORITY_LABELS[value],
-    state: (value) => STATE_LABELS[value]
-  },
+  filters: { priority, state },
   async created () {
     const api = this.$props.cfg.url
     const taskid = this.$router.currentRoute.params.id
     const res = await Promise.all([
       axios.get(api, { params: { filter: JSON.stringify({ id: taskid }) } }),
-      axios.get(`${api}/${taskid}/comments`)
+      axios.get(`${api}/${taskid}/comments?sort=created:desc`)
     ])
     this.$data.task = res[0].data[0]
     this.$data.comments = res[1].data
@@ -65,9 +63,9 @@ export default {
         <div class="col-sm-6 col-md-4">
           Manažer: {{ task.manager | username }}<br/>
           Resitel: {{ task.solver | username }}<br/>
-          Priorita: {{ task.prio }}<br/>
+          Priorita: {{ task.prio | priority }}<br/>
           Termín: {{ task.due | date }}<br/>
-          Stav: {{ task.state }} <StateControl :cfg="cfg" :task="task" :UID="$store.getters.UID" /><br/>
+          Stav: {{ task.state | state }} <StateControl :cfg="cfg" :task="task" :UID="$store.getters.UID" /><br/>
           <span>{{ task.tags }}</span>, {{ task.created | datetime }}
           <p><vue-markdown>{{ task.desc }}</vue-markdown></p>
         </div>

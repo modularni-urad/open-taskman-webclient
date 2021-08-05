@@ -12,7 +12,11 @@ export const PRIORITY_LABELS = {
 
 export const STATE_LABELS = {
   'new': 'Nový',
+  'dlgt': 'Delegován',
+  'refd': 'Odmítnut',
   'done': 'Hotový',
-  '3rdP': 'Čeká na 3.stranu',
-  'prog': 'V řešení'
+  'fini': 'Dokončen',
+  'err': 'Vrácen',
+  'prog': 'V řešení',
+  'clsd': 'Uzavřen'
 }
