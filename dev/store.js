@@ -8,15 +8,20 @@ Vue.filter('username', function (uid) {
   return loadedUsers[uid] || 'unknown'
 })
 
-export default new Vuex.Store({
+export default (router) => (new Vuex.Store({
   state: {
-    user: savedUser && JSON.parse(savedUser)
+    user: savedUser && JSON.parse(savedUser),
+    router: router
   },
   getters: {
     userLogged: state => {
       return state.user !== null
     },
-    UID: state => (state.user.id),
+    UID: state => {
+      const UID = state.router.currentRoute.query.uid || state.user.id
+      axios.post('http://localhost:24000/set', { id: UID })
+      return UID
+    },
     isMember: state => group => {
       try {
         return state.user.groups.indexOf(group) >= 0
@@ -54,4 +59,4 @@ export default new Vuex.Store({
       })
     }
   }
-})
+}))

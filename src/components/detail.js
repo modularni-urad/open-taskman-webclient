@@ -1,6 +1,7 @@
 /* global axios, API, _ */
 import { PRIORITY_LABELS, STATE_LABELS, ROUTE_NAMES } from '../consts.js'
 import CommentForm from './commentform.js'
+import StateControl from './statecontrol/index.js'
 
 export default {
   data: () => {
@@ -35,12 +36,20 @@ export default {
   computed: {
     backUrl: function () {
       return { name: ROUTE_NAMES.list }
+    },
+    solvers: function () {
+      return this.$data.task.solvers
+    },
+    manager: function () {
+      return this.$data.task.solvers
+        ? _.last(this.$data.task.solvers)
+        : this.$data.task.owner
     }
   },
   methods: {
 
   },
-  components: { CommentForm },
+  components: { CommentForm, StateControl },
   template: `
     <div>
       <b-breadcrumb>
@@ -54,19 +63,19 @@ export default {
       
       <div class="row" v-if="!loading">
         <div class="col-sm-6 col-md-4">
-          Manažer: {{ task.owner | username }}<br/>
-          Řešitel: {{ task.solver | username }}<br/>
-          Priorita: {{ task.prio | priority }}<br/>
-          Stav: {{ task.state | state }}<br/>
-          Termín: {{ task.due | formatDate }}<br/>
-          <span>{{ task.tags }}</span>, {{ task.created | formatDate }}
+          Manažer: {{ task.manager | username }}<br/>
+          Resitel: {{ task.solver | username }}<br/>
+          Priorita: {{ task.prio }}<br/>
+          Termín: {{ task.due | date }}<br/>
+          Stav: {{ task.state }} <StateControl :cfg="cfg" :task="task" :UID="$store.getters.UID" /><br/>
+          <span>{{ task.tags }}</span>, {{ task.created | datetime }}
           <p><vue-markdown>{{ task.desc }}</vue-markdown></p>
         </div>
 
         <div class="col-sm-6 col-md-8">
           <div style="height: 30em; overflow: overlay;">
             <div v-for="c in comments">
-              <div><b>{{ c.author | username }}</b> <i>{{ c.created | longDate }}</i>:</div>
+              <div><b>{{ c.author | username }}</b> <i>{{ c.created | datetime }}</i>:</div>
               <vue-markdown>{{ c.content }}</vue-markdown>
             </div>
           </div>
