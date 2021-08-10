@@ -33,15 +33,15 @@ export default [
     label: "Priorita",
     fieldcomponent: true
   },
-  // {
-  //   name: "manager",
-  //   label: "Manažer",
-  //   fieldcomponent: true
-  // },
-  // {
-  //   name: "state",
-  //   options: _.map(STATE_LABELS, (v, k) => ({ value: k, text: v })),
-  //   label: "Stav",
-  //   fieldcomponent: true
-  // }
+  {
+    name: "solver",
+    label: "Řešitel",
+    fieldcomponent: true
+  },
+  {
+    name: "state",
+    options: _.map(STATE_LABELS, (v, k) => ({ value: k, text: v })),
+    label: "Stav",
+    fieldcomponent: true
+  }
 ]
