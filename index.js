@@ -1,18 +1,26 @@
 import ListComponent from './src/components/list.js'
 import DetailComponent from './src/components/detail.js'
 import { ROUTE_NAMES as NAMES } from './src/consts.js'
+import formconfig from './src/formconfig.js'
+import { initConfig } from '/modularni-urad-admin-components/entity/utils.js'
 
-export default function setupTaskmanRoutes (path, cfg) {
+export default async function setupTaskmanRoutes (path, cfg) {
+  Object.assign(cfg, {conf: formconfig})
+  await initConfig(cfg)
   return [{ 
     path, 
     name: NAMES.list, 
     component: ListComponent, 
-    props: { cfg }
+    props: route => {
+      return { query: route.query, cfg }
+    }
   }, { 
     path: `${path}:id`, 
     name: NAMES.detail, 
     component: DetailComponent, 
-    props: { cfg } 
+    props: route => {
+      return { query: route.query, cfg }
+    }
   }]
 }
 

@@ -1,4 +1,4 @@
-import { STATE_LABELS } from './consts.js'
+import { STATE_LABELS, PRIORITY_LABELS } from './consts.js'
 export default [
   {
     name: 'name',
@@ -11,26 +11,37 @@ export default [
     name: 'desc',
     component: "dyn-textarea",
     label: "popis",
-    rules: "required",
-    fieldcomponent: false
+    rules: "required"
   },
   {
     name: "tags",
     component: "dyn-input",
     label: "tagy",
     rules: "required",
+    fieldcomponent: false
+  },
+  {
+    name: "due",
+    component: "dyn-date",
+    label: "Deadline",
+    fieldcomponent: 'datestring'
+  },
+  {
+    name: "prio",
+    component: "dyn-select",
+    options: _.map(PRIORITY_LABELS, (v, k) => ({ value: k, text: v })),
+    label: "Priorita",
     fieldcomponent: true
   },
   // {
-  //   name: "owner",
-  //   component: "dyn-input",
-  //   label: "Manažer"
+  //   name: "manager",
+  //   label: "Manažer",
+  //   fieldcomponent: true
   // },
   // {
   //   name: "state",
-  //   component: "dyn-select",
   //   options: _.map(STATE_LABELS, (v, k) => ({ value: k, text: v })),
   //   label: "Stav",
-  //   fieldcomponent: true//"datestring"
+  //   fieldcomponent: true
   // }
 ]

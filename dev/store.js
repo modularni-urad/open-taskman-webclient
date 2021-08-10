@@ -8,10 +8,11 @@ Vue.filter('username', function (uid) {
   return loadedUsers[uid] || 'unknown'
 })
 
-export default (router) => (new Vuex.Store({
+export default (router, cfg) => (new Vuex.Store({
   state: {
     user: savedUser && JSON.parse(savedUser),
-    router: router
+    router: router,
+    cfg
   },
   getters: {
     userLogged: state => {
