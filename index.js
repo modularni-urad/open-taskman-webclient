@@ -4,6 +4,10 @@ import { ROUTE_NAMES as NAMES } from './src/consts.js'
 import formconfig from './src/formconfig.js'
 import { initConfig } from '/modularni-urad-admin-components/entity/utils.js'
 
+export function createMenu (user) {
+  return { label: 'úkoly', to: { name: NAMES.list } }
+}
+
 export default async function setupTaskmanRoutes (path, cfg) {
   Object.assign(cfg, {conf: formconfig})
   await initConfig(cfg)
