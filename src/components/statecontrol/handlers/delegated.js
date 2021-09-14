@@ -1,4 +1,5 @@
 import { DELEGATION_REFUSE} from '../formconfigs.js'
+import ItemForm from '/modularni-urad-admin-components/entity/form.js'
 import { setState } from '../utils.js'
 
 export default {
@@ -36,11 +37,12 @@ export default {
       return setState(this.$store, 'prog', this.$props)
     }
   },
+  components: { ItemForm },
   template: `
     <span v-if="forMe">
       <b-button @click="accept">akceptovat</b-button>
       <b-button @click="open = true">odmítnout</b-button>
-      <b-modal v-model="open" size="lg" title="Odmítnout úkol" hide-footer>
+      <b-modal v-model="open" size="lg" title="odmítnout úkol" hide-footer>
         <ItemForm :config="formconfig" :onSubmit="onSubmit" />
       </b-modal>
     </span>

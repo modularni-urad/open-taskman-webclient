@@ -41,6 +41,9 @@ export default (router, cfg) => (new Vuex.Store({
     toast: function (ctx, opts) {
       // Vue.$toast.open(opts)
     },
+    onerror: function (ctx, err) {
+      console.error(err)
+    },
     send: function (ctx, opts) {
       Object.assign(opts, {  // for debug only
         headers: { 'Authorization': `Bearer bjbjbj`}

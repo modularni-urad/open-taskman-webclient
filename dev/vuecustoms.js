@@ -13,3 +13,60 @@ Vue.filter('datetime', function (value) {
     return value.format('DD.MM.YYYY HH:mm')
   }
 })
+
+Vue.component('NameSpan', {
+  props: ['uid', 'cfg'],
+  template: `
+    <span>User: {{ uid }}</span>
+  `
+})
+
+Vue.component('select-user', {
+  data(){
+    return {
+      query: '',
+      users: []
+    }
+  },
+  props: ['config', 'disabled', 'data'],
+  methods: {
+    lookupUser: function() {
+      // in practice this action should be debounced
+      fetch(`https://api.github.com/search/users?q=${this.query}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.users = data.items;
+        })
+    },
+    select: function ($event) {
+      const { data, config } = this.$props
+      data[config.name] = $event.id
+    }
+  },
+  components: { 'vue-typeahead-bootstrap': VueTypeaheadBootstrap },
+  template: `
+<validation-provider v-bind:rules="config.rules" v-slot="{ errors }">
+  <b-form-group
+    :state="errors.length === 0"
+    :label="config.label"
+    :invalid-feedback="errors[0]"
+  >
+    
+    <vue-typeahead-bootstrap
+      v-model="query"
+      :disabled="disabled"
+      :ieCloseFix="false"
+      :data="users"
+      :serializer="item => item.login"
+      @hit="select"
+      :placeholder="config.placeholder || 'prohledat uživatele'"
+      @input="lookupUser"
+      :background-variant-resolver="(user) => ((user.id % 2) == 0) ? 'light':'dark'"
+    />
+
+  </b-form-group>
+</validation-provider>
+  `
+})

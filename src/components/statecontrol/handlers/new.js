@@ -1,3 +1,4 @@
+import ItemForm from '/modularni-urad-admin-components/entity/form.js'
 import { DELEGATION} from '../formconfigs.js'
 
 export default {
@@ -25,12 +26,12 @@ export default {
         })
         this.$data.open = false
       } catch(err) {
-        const message = err.response.data
-        this.$store.dispatch('toast', { message, type: 'error' })
+        this.$store.dispatch('onerror', err)
         throw err
       }
     }
   },
+  components: { ItemForm },
   template: `
     <span v-if="forMe">
       <b-button @click="open = true">delegovat</b-button>

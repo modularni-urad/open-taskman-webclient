@@ -1,6 +1,5 @@
 import ListView from '/modularni-urad-admin-components/entity/list.js'
-import { cellData } from '/modularni-urad-admin-components/entity/utils.js'
-import { ROUTE_NAMES } from '../consts.js'
+import Actions from './actions.js'
 
 const prioClasses = {
   'low': null,
@@ -12,35 +11,26 @@ const prioClasses = {
 export default {
   props: ['query', 'cfg'],
   methods: {
-    doEdit: function (row) {
-      const query = Object.assign({}, this.query, { _detail: row.id })
-      this.$router.replace({ query })
-    },
     rowClass: function (row) {
       return prioClasses[row.prio] || ''
-    },
-    showDetail: function (i) {
-      this.$router.push({ name: ROUTE_NAMES.detail, params: { id: i.id } })
-    },
-    cellData
+    }
   },
-  components: { ListView },
+  components: { ListView, Actions },
   template: `
   <ListView :query="query" :cfg="cfg">
     <template v-slot:default="{ items, fields }">
+
       <tr v-for="row,rowidx in items" :key="rowidx" :class="rowClass(row)">
-        <td v-for="field,idx in fields" :key="idx">
-          {{ cellData(row, field) }}
-        </td>
-        <td key="actions">
-          <b-button size="sm" variant="primary" @click="doEdit(row)">
-            <i class="fas fa-edit"></i> upravit
-          </b-button>
-          <b-button size="sm" variant="secondary" @click="showDetail(row)">
-            <i class="fas fa-edit"></i> detail
-          </b-button>
-        </td>
+        <td>{{ row.id }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.due | date }}</td>
+        <td>{{ row.prio }}</td>
+        <td><NameSpan :uid="row.solver" :cfg="cfg" /></td>
+        <td>{{ row.state }}</td>
+        <td>{{ row.tags }}</td>
+        <Actions key="actions" :query="query" :row="row" :cfg="cfg" />
       </tr>
+
     </template>
   </ListView>
   `

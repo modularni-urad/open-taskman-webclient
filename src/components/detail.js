@@ -61,8 +61,8 @@ export default {
       
       <div class="row" v-if="!loading">
         <div class="col-sm-6 col-md-4">
-          Manažer: {{ task.manager | username }}<br/>
-          Resitel: {{ task.solver | username }}<br/>
+          Manažer: <NameSpan :uid="task.manager" :cfg="cfg" /><br/>
+          Resitel: <NameSpan :uid="task.solver" :cfg="cfg" /><br/>
           Priorita: {{ task.prio | priority }}<br/>
           Termín: {{ task.due | date }}<br/>
           Stav: {{ task.state | state }} <StateControl :cfg="cfg" :task="task" :UID="$store.getters.UID" /><br/>
@@ -73,7 +73,7 @@ export default {
         <div class="col-sm-6 col-md-8">
           <div style="height: 30em; overflow: overlay;">
             <div v-for="c in comments">
-              <div><b>{{ c.author | username }}</b> <i>{{ c.created | datetime }}</i>:</div>
+              <div><b><NameSpan :uid="c.author" :cfg="cfg" /></b> <i>{{ c.created | datetime }}</i>:</div>
               <vue-markdown>{{ c.content }}</vue-markdown>
             </div>
           </div>
