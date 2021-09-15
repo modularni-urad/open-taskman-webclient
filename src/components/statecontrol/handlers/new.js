@@ -1,4 +1,3 @@
-import ItemForm from '/modularni-urad-admin-components/entity/form.js'
 import { DELEGATION} from '../formconfigs.js'
 
 export default {
@@ -31,12 +30,11 @@ export default {
       }
     }
   },
-  components: { ItemForm },
   template: `
     <span v-if="forMe">
       <b-button @click="open = true">delegovat</b-button>
       <b-modal v-model="open" size="lg" title="delegovat" hide-footer>
-        <ItemForm :config="formconfig" :onSubmit="onSubmit" />
+        <ACDynamicForm :config="formconfig" :onSubmit="onSubmit" />
       </b-modal>
     </span>
   `

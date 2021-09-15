@@ -1,4 +1,3 @@
-import ListView from '/modularni-urad-admin-components/entity/list.js'
 import Actions from './actions.js'
 
 const prioClasses = {
@@ -15,9 +14,9 @@ export default {
       return prioClasses[row.prio] || ''
     }
   },
-  components: { ListView, Actions },
+  components: { Actions },
   template: `
-  <ListView :query="query" :cfg="cfg">
+  <ACListView :query="query" :cfg="cfg">
     <template v-slot:default="{ items, fields }">
 
       <tr v-for="row,rowidx in items" :key="rowidx" :class="rowClass(row)">
@@ -32,6 +31,6 @@ export default {
       </tr>
 
     </template>
-  </ListView>
+  </ACListView>
   `
 }

@@ -32,17 +32,20 @@ Vue.component('select-user', {
   methods: {
     lookupUser: function() {
       // in practice this action should be debounced
-      fetch(`https://api.github.com/search/users?q=${this.query}`)
+      fetch(`https://stredni.web.otevrenamesta.cz/userman/search?query=${this.query}`)
         .then(response => {
-          return response.json();
+          return response.json()
         })
         .then(data => {
-          this.users = data.items;
+          this.users = data
         })
     },
     select: function ($event) {
       const { data, config } = this.$props
       data[config.name] = $event.id
+    },
+    serialize: function (item) {
+      return `${item.name} (${item.username})`
     }
   },
   components: { 'vue-typeahead-bootstrap': VueTypeaheadBootstrap },
@@ -59,7 +62,7 @@ Vue.component('select-user', {
       :disabled="disabled"
       :ieCloseFix="false"
       :data="users"
-      :serializer="item => item.login"
+      :serializer="serialize"
       @hit="select"
       :placeholder="config.placeholder || 'prohledat uživatele'"
       @input="lookupUser"
