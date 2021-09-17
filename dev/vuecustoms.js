@@ -21,7 +21,7 @@ Vue.component('NameSpan', {
   `
 })
 
-Vue.component('select-user', {
+Vue.component('user-select', {
   data(){
     return {
       query: '',

@@ -2,7 +2,7 @@ import { PRIORITY_LABELS } from '../../consts.js'
 export const DELEGATION = [
   {
     name: 'user',
-    component: "select-user",
+    component: "user-select",
     label: "řešitel",
     rules: "required"
   },
