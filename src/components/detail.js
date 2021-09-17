@@ -23,11 +23,6 @@ export default {
     ])
     this.$data.task = res[0].data[0]
     this.$data.comments = res[1].data
-    const uids = _.uniq(_.union(
-      _.map(res[1].data, i => i.author),
-      [this.$data.task.owner, this.$data.task.solver]
-    ))
-    await this.$store.dispatch('loadusers', uids)
     this.$data.loading = false
   },
   props: ['cfg'],
