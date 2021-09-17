@@ -19,7 +19,7 @@ export default {
     const taskid = this.$router.currentRoute.params.id
     const res = await Promise.all([
       axios.get(api, { params: { filter: JSON.stringify({ id: taskid }) } }),
-      axios.get(`${api}/${taskid}/comments?sort=created:desc`)
+      axios.get(`${api}${taskid}/comments?sort=created:desc`)
     ])
     this.$data.task = res[0].data[0]
     this.$data.comments = res[1].data

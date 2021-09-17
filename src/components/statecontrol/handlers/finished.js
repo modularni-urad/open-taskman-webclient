@@ -15,7 +15,7 @@ export default {
       try {
         const res = await this.$store.dispatch('send', {
           method: 'post',
-          url: `${api}/${taskid}/delegation/${data.user}`
+          url: `${api}${taskid}/delegation/${data.user}`
         })
         this.$data.open = false
       } catch(err) {

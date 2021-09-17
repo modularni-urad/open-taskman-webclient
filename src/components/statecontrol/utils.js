@@ -4,7 +4,7 @@ export async function setState (store, state, props) {
   try {
     const res = await store.dispatch('send', {
       method: 'put',
-      url: `${api}/${taskid}/state/${state}`
+      url: `${api}${taskid}/state/${state}`
     })
     Object.assign(props.task, res.data)
     store.dispatch('toast', { message: 'status změněn' })

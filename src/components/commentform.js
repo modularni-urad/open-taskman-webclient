@@ -19,7 +19,7 @@ export default {
         this.$data.saving = true
         const res = await this.$store.dispatch('send', {
           method: 'post',
-          url: `${api}/${id}/comments`,
+          url: `${api}${id}/comments`,
           data
         })
         this.$props.comments.push(res.data[0])

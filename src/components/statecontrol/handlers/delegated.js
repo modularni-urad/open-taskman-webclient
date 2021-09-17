@@ -22,7 +22,7 @@ export default {
       try {
         const res = await this.$store.dispatch('send', {
           method: 'put',
-          url: `${api}/${taskid}/state/refd`,
+          url: `${api}${taskid}/state/refd`,
           data
         })
         this.$data.open = false
