@@ -5,7 +5,7 @@ export default {
   computed: {
     forMe: function () {
       const { task, UID } = this.$props
-      return task.manager === UID
+      return task.manager.toString() === UID.toString()
     }
   },
   methods: {
@@ -19,8 +19,7 @@ export default {
         })
         this.$data.open = false
       } catch(err) {
-        const message = err.response.data
-        this.$store.dispatch('toast', { message, type: 'error' })
+        this.$store.dispatch('onerror', err)
         throw err
       }
     },

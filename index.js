@@ -4,7 +4,7 @@ import { ROUTE_NAMES as NAMES } from './src/consts.js'
 import formconfig from './src/formconfig.js'
 
 export function createMenu (user) {
-  return { label: 'úkoly2', to: { name: NAMES.list } }
+  return { label: 'úkoly', to: { name: NAMES.list } }
 }
 
 export async function setupRoutes (path, cfg, initConfig) {

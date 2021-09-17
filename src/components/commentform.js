@@ -22,12 +22,11 @@ export default {
           url: `${api}/${id}/comments`,
           data
         })
-        this.$props.comments.push(res.data)
+        this.$props.comments.push(res.data[0])
         this.$data.content = ''
         this.$data.open = false
       } catch(err) {
-        const message = err.response.data
-        this.$store.dispatch('toast', { message, type: 'error' })
+        this.$store.dispatch('onerror', err)
       } finally {
         this.$data.saving = false
       }

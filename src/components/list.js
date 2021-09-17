@@ -24,7 +24,7 @@ export default {
         <td>{{ row.name }}</td>
         <td>{{ row.due | date }}</td>
         <td>{{ row.prio }}</td>
-        <td><NameSpan :uid="row.solver" :cfg="cfg" /></td>
+        <td><NameSpan v-if="row.solver" :uid="row.solver" :cfg="cfg" /></td>
         <td>{{ row.state }}</td>
         <td>{{ row.tags }}</td>
         <Actions key="actions" :query="query" :row="row" :cfg="cfg" />

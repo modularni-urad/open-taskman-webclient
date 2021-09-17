@@ -11,7 +11,7 @@ export default {
   computed: {
     forMe: function () {
       const { task, UID } = this.$props
-      return task.owner === UID
+      return task.owner.toString() === UID.toString()
     }
   },
   methods: {

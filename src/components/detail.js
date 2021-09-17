@@ -56,8 +56,8 @@ export default {
       
       <div class="row" v-if="!loading">
         <div class="col-sm-6 col-md-4">
-          Manažer: <NameSpan :uid="task.manager" :cfg="cfg" /><br/>
-          Resitel: <NameSpan :uid="task.solver" :cfg="cfg" /><br/>
+          Manažer: <NameSpan v-if="task.manager" :uid="task.manager" :cfg="cfg" /><br/>
+          Resitel: <NameSpan v-if="task.solver" :uid="task.solver" :cfg="cfg" /><br/>
           Priorita: {{ task.prio | priority }}<br/>
           Termín: {{ task.due | date }}<br/>
           Stav: {{ task.state | state }} <StateControl :cfg="cfg" :task="task" :UID="$store.getters.UID" /><br/>
