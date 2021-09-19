@@ -25,6 +25,8 @@ export default {
           url: `${api}${taskid}/state/refd`,
           data
         })
+        Object.assign(this.$props.task, res.data)
+        this.$store.dispatch('toast', { message: 'status změněn' })
         this.$data.open = false
       } catch(err) {
         this.$store.dispatch('onerror', err)

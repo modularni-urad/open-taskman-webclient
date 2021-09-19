@@ -24,6 +24,8 @@ export default {
           method: 'post',
           url: `${api}${taskid}/delegation/${data.user}`
         })
+        Object.assign(this.$props.task, res.data)
+        this.$store.dispatch('toast', { message: 'status změněn' })
         this.$data.open = false
       } catch(err) {
         this.$store.dispatch('onerror', err)
@@ -39,7 +41,7 @@ export default {
       <b-button @click="accept">dokončit</b-button>
       <b-button @click="open = true">delegovat</b-button>
       <b-modal v-model="open" size="lg" title="delegovat" hide-footer>
-        <ItemForm :config="formconfig" :onSubmit="onSubmit" />
+        <ACDynamicForm :config="formconfig" :onSubmit="onSubmit" />
       </b-modal>
     </span>
   `
