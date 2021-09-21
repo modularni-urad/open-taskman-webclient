@@ -7,7 +7,7 @@ import hDone from './handlers/done.js'
 const handlingComponents = {
   new: 'hNew',
   dlgt: 'hDelegated',
-  refd: 'hRefused',
+  refd: 'hNew',
   prog: 'hInprogress',
   fini: 'hFinished',
   done: 'hDone',
@@ -23,6 +23,6 @@ export default {
   },
   components: { hNew, hDelegated, hInprogress, hFinished, hDone },
   template: `
-  <component :is="c" :cfg="cfg" :task="task" :UID="UID" />
+  <component :is="c" :cfg="cfg" :task="task" :UID="UID" v-on="$listeners" />
   `
 }

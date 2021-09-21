@@ -23,12 +23,11 @@ export default {
           method: 'post',
           url: `${api}${taskid}/delegation/${data.user}`
         })
-        Object.assign(this.$props.task, res.data)
+        this.$emit('statechange', res.data)
         this.$store.dispatch('toast', { message: 'úkol delegován' })
         this.$data.open = false
       } catch(err) {
         this.$store.dispatch('onerror', err)
-        throw err
       }
     }
   },

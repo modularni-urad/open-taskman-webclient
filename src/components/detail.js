@@ -40,7 +40,9 @@ export default {
     }
   },
   methods: {
-
+    onStateChange: function (update) {
+      Object.assign(this.task, update[0])
+    }
   },
   components: { CommentForm, StateControl },
   template: `
@@ -60,7 +62,9 @@ export default {
           Resitel: <NameSpan v-if="task.solver" :uid="task.solver" :cfg="cfg" /><br/>
           Priorita: {{ task.prio | priority }}<br/>
           Termín: {{ task.due | date }}<br/>
-          Stav: {{ task.state | state }} <StateControl :cfg="cfg" :task="task" :UID="$store.getters.UID" /><br/>
+          Stav: {{ task.state | state }} <StateControl 
+            :cfg="cfg" :task="task" :UID="$store.getters.UID" 
+            @statechange="onStateChange" /><br/>
           <span>{{ task.tags }}</span>, {{ task.created | datetime }}
           <p><vue-markdown>{{ task.desc }}</vue-markdown></p>
         </div>
