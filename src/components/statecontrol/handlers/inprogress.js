@@ -33,7 +33,7 @@ export default {
       }
     },
     accept: async function () {
-      return setState(this.$store, 'fini', this.$props)
+      return setState(this, 'fini')
     }
   },
   template: `

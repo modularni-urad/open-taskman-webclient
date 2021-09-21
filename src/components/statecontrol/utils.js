@@ -1,16 +1,14 @@
-export async function setState (store, state, props) {
-  const taskid = props.task.id
-  const api = props.cfg.url
+export async function setState (vm, state) {
+  const taskid = vm.$props.task.id
+  const api = vm.$props.cfg.url
   try {
-    const res = await store.dispatch('send', {
+    const res = await vm.$store.dispatch('send', {
       method: 'put',
       url: `${api}${taskid}/state/${state}`
     })
-    Object.assign(props.task, res.data)
-    store.dispatch('toast', { message: 'status změněn' })
+    vm.$emit('statechange', res.data)
+    vm.$store.dispatch('toast', { message: 'status změněn' })
   } catch(err) {
-    const message = err.response.data
-    store.dispatch('toast', { message, type: 'error' })
-    throw err
+    vm.$store.dispatch('onerror', err)
   }
 }

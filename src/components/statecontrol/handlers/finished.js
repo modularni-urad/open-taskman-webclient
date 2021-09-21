@@ -26,7 +26,7 @@ export default {
       }
     },
     accept: async function () {
-      return setState(this.$store, 'done', this.$props)
+      return setState(this, 'done')
     }
   },
   template: `
