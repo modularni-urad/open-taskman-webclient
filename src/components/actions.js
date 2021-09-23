@@ -4,8 +4,8 @@ export default {
   props: ['query', 'cfg', 'row'],
   computed: {
     muzuUpravit: function () {
-      return this.row.stav === 'draft' 
-        && this.row.predkl === this.$store.getters.UID.toString()
+      return this.row.state !== 'done'
+        && this.row.owner === this.$store.getters.UID.toString()
     }
   },
   methods: {
@@ -20,7 +20,7 @@ export default {
   template: `
   <td>
     <b-button-group>
-      <b-button size="sm" variant="primary" @click="doEdit(row)">
+      <b-button v-if="muzuUpravit" size="sm" variant="primary" @click="doEdit(row)">
         <i class="fas fa-edit"></i> upravit
       </b-button>
       <b-button size="sm" variant="secondary" @click="showDetail(row)">
