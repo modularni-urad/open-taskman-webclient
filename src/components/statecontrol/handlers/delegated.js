@@ -12,7 +12,8 @@ export default {
   computed: {
     forMe: function () {
       const { task, UID } = this.$props
-      return _.last(task.solvers) === UID.toString()
+      const solvers = task.solvers ? task.solvers.split(',') : []
+      return _.last(solvers) === UID.toString()
     }
   },
   methods: {
