@@ -9,12 +9,17 @@ export function state (value) {
 }
 
 export const listfilters = [
-  { label: 'music', key: 'f1', value: () => ({ tags:{ like: '%music%' } }) },
-  { label: '1 month old', key: 'f2', value: () => {
-    const now = moment().toISOString()
-    const monthAgo = moment().subtract(1, 'month').toISOString()
-    return {
-      published: { between: [monthAgo, now] }
+  { 
+    label: 'moje úkoly', key: 'f1', value: (self) => { 
+      return { solver: self.$store.state.user.id }
     }
-  }}
+  },
+  { 
+    label: 'úkoly mého týmu', key: 'f2', value: (self) => { 
+      return { or: [
+        { manager: self.$store.state.user.id },
+        { owner: self.$store.state.user.id }
+      ]}
+    }
+  }
 ]
