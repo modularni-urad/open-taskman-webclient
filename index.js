@@ -8,24 +8,25 @@ export function createMenu (user) {
   return { label: 'úkoly', to: { name: NAMES.list } }
 }
 
-export async function setupRoutes (path, cfg, initConfig) {
+export async function setupRoutes (routes, path, cfg, initConfig) {
   Object.assign(cfg, { conf: formconfig, filters: listfilters })
   await initConfig(cfg)
-  return [{ 
+  routes.push({ 
     path, 
     name: NAMES.list, 
     component: ListComponent, 
     props: route => {
       return { query: route.query, cfg }
     }
-  }, { 
+  })
+  routes.push({ 
     path: `${path}:id`, 
     name: NAMES.detail, 
     component: DetailComponent, 
     props: route => {
       return { query: route.query, cfg }
     }
-  }]
+  })
 }
 
 export const List = ListComponent
