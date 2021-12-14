@@ -18,7 +18,6 @@ export default {
     }
   },
   template: `
-  <td>
     <b-button-group>
       <b-button v-if="muzuUpravit" size="sm" variant="primary" @click="doEdit(row)">
         <i class="fas fa-edit"></i> upravit
@@ -27,6 +26,5 @@ export default {
         <i class="fas fa-edit"></i> detail
       </b-button>
     </b-button-group>
-  </td>
   `
 }

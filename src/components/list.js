@@ -27,7 +27,7 @@ export default {
   components: { Actions },
   template: `
   <ACListView :query="query" :cfg="cfg">
-    <template v-slot:default="{ items, fields }">
+    <template v-slot:tbody="{ items, fields }">
 
       <tr v-for="row,rowidx in items" :key="rowidx">
         <td>{{ row.id }}</td>
@@ -37,7 +37,7 @@ export default {
         <td><NameSpan v-if="row.solver" :uid="row.solver" :cfg="cfg" /></td>
         <td>{{ row.state | state }}</td>
         <td>{{ row.tags }}</td>
-        <Actions key="actions" :query="query" :row="row" :cfg="cfg" />
+        <td><Actions key="actions" :query="query" :row="row" :cfg="cfg" /></td>
       </tr>
 
     </template>
