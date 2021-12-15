@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=debug node -r esm --inspect dev/server.js",
-    "build": "rollup src/main.js --file dist/bundle.js --format iife"
+    "build": "rollup index.js --file dist/bundle.js --format umd --name mytaskman --external modularni-urad-admin-components"
   },
   "keywords": [
     "web",
@@ -25,10 +25,10 @@
     "knex-hooks": "0.0.9",
     "modularni-urad-admin-components": "github:modularni-urad/admin-components",
     "modularni-urad-taskman": "github:modularni-urad/taskman",
-    "entity-api-base": "github:modularni-urad/entity-api-base",
     "sqlite3": "^4.2.0"
   },
   "dependencies": {
-    "rollup": "^1.29.1"
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "rollup": "^2.56.3"
   }
 }

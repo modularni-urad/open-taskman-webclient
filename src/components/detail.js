@@ -77,7 +77,7 @@ export default {
             </div>
           </div>
           
-          <CommentForm :cfg="cfg" :comments="comments" />
+          <CommentForm v-if="$store.getters.userLogged" :cfg="cfg" :comments="comments" />
         </div>
       </div>
     </div>

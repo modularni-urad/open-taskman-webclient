@@ -20,3 +20,5 @@ export const STATE_LABELS = {
   'prog': 'V řešení',
   'clsd': 'Uzavřen'
 }
+
+export const VIEWNAME = 'úkoly'
