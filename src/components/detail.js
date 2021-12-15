@@ -18,10 +18,10 @@ export default {
     const api = this.$props.cfg.url
     const taskid = this.$router.currentRoute.params.id
     const res = await Promise.all([
-      axios.get(api, { params: { filter: JSON.stringify({ id: taskid }) } }),
+      axios.get(`${api}${taskid}`),
       axios.get(`${api}${taskid}/comments?sort=created:desc`)
     ])
-    this.$data.task = res[0].data[0]
+    this.$data.task = res[0].data
     this.$data.comments = res[1].data
     this.$data.loading = false
   },
