@@ -23,9 +23,7 @@
     "express": "^4.17.1",
     "knex": "^0.21.16",
     "knex-hooks": "0.0.9",
-    "modularni-urad-admin-components": "github:modularni-urad/admin-components",
-    "modularni-urad-taskman": "github:modularni-urad/taskman",
-    "sqlite3": "^4.2.0"
+    "modularni-urad-admin-components": "github:modularni-urad/admin-components"
   },
   "dependencies": {
     "@rollup/plugin-node-resolve": "^13.0.4",

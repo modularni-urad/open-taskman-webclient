@@ -1,5 +1,3 @@
-/* global Vue, _, moment */
-
 Vue.filter('date', function (value) {
   if (value) {
     value = _.isString(value) ? moment(value) : value
@@ -32,7 +30,7 @@ Vue.component('user-select', {
   methods: {
     lookupUser: function() {
       // in practice this action should be debounced
-      fetch(`https://stredni.web.otevrenamesta.cz/userman/search?query=${this.query}`)
+      fetch(`https://dev.modurad.otevrenamesta.cz/omstredni/auth/search?q=${this.query}`)
         .then(response => {
           return response.json()
         })

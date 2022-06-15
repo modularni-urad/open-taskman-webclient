@@ -11,15 +11,30 @@ export function state (value) {
 export const listfilters = [
   { 
     label: 'moje úkoly', key: 'f1', value: (self) => { 
-      return { solver: self.$store.state.user.id }
+      return { 
+        not: { state: 'done' },
+        solver: self.$store.state.user.id
+      }
     }
-  },
-  { 
+  }, { 
     label: 'úkoly mého týmu', key: 'f2', value: (self) => { 
-      return { or: [
-        { manager: self.$store.state.user.id },
-        { owner: self.$store.state.user.id }
-      ]}
+      return { 
+        not: { state: 'done' },
+        or: [
+          { manager: self.$store.state.user.id },
+          { owner: self.$store.state.user.id }
+        ]
+      }
+    }
+  }, { 
+    label: 'hotové úkoly', key: 'f3', value: (self) => { 
+      return {
+        state: 'done',
+        or: [
+          { manager: self.$store.state.user.id },
+          { owner: self.$store.state.user.id }
+        ]
+      }
     }
   }
 ]

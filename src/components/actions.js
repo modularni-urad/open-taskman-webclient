@@ -1,7 +1,7 @@
 import { ROUTE_NAMES } from '../consts.js'
 
 export default {
-  props: ['query', 'cfg', 'row'],
+  props: ['query', 'cfg', 'row', 'doEdit'],
   computed: {
     muzuUpravit: function () {
       return this.row.state !== 'done'
@@ -9,10 +9,6 @@ export default {
     }
   },
   methods: {
-    doEdit: function () {
-      const query = Object.assign({}, this.query, { _detail: this.row.id })
-      this.$router.replace({ query })
-    },
     showDetail: function (i) {
       this.$router.push({ name: ROUTE_NAMES.detail, params: { id: i.id } })
     }

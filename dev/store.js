@@ -1,16 +1,7 @@
-/* global Vue, Vuex, localStorage, API, axios, _ */
-
-const KEY = '_opencomm_user_'
-const savedUser = localStorage.getItem(KEY)
-const loadedUsers = {}
-
-Vue.filter('username', function (uid) {
-  return loadedUsers[uid] || 'unknown'
-})
 
 export default (router, cfg) => (new Vuex.Store({
   state: {
-    user: savedUser && JSON.parse(savedUser),
+    user: {},
     router: router,
     cfg
   },
@@ -19,9 +10,7 @@ export default (router, cfg) => (new Vuex.Store({
       return state.user !== null
     },
     UID: state => {
-      const UID = state.router.currentRoute.query.uid || state.user.id
-      axios.post('http://localhost:24000/set', { id: UID })
-      return UID
+      return state.user.id
     },
     isMember: state => group => {
       try {
@@ -33,20 +22,22 @@ export default (router, cfg) => (new Vuex.Store({
   },
   mutations: {
     profile: (state, profile) => {
-      localStorage.setItem(KEY, JSON.stringify(profile))
       state.user = profile
     }
   },
   actions: {
-    toast: function (ctx, opts) {
-      // Vue.$toast.open(opts)
-    },
     onerror: function (ctx, err) {
       console.error(err)
     },
+    login: function (ctx, credentials) {
+      const url = 'https://dev.modurad.otevrenamesta.cz/omstredni/auth/login/omesta?token=1'
+      return axios.post(url, credentials).then(res => {
+        this.commit('profile', res.data)
+      }).catch(err => this.dispatch('onerror', err))
+    },
     send: function (ctx, opts) {
-      Object.assign(opts, {  // for debug only
-        headers: { 'Authorization': `Bearer bjbjbj`}
+      Object.assign(opts, {
+        headers: { 'Authorization': `Bearer ${this.state.user.token}` }
       })
       return axios(opts)
     }
